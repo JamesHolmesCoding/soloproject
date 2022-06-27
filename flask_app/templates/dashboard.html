@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body class="body">
+    <nav class="d-flex justify-content-between align-items-center col-12 navbar">
+        <h1 class="text-center">Welcome to Wine Club {{user.first_name}}!!!</h1>
+        
+        <div class="d-flex col-4 justify-content-around">
+        
+            <a href="/show" class="btn btn-primary">My Favorite Wines</a>
+            <a href="/new" class="btn btn-primary">Add New Wine</a>
+            <a href="/logout" class="btn btn-info">Logout</a>
+            
+
+        </div>
+    </nav>
+        <h1 class="text-center">Wine Board</h1>
+    <div class="col-8 mx-auto">
+
+        <table class="table table-hover wine_show_card mt-5">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Reviewer</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wine in wines %}
+                    <tr>
+                        <td>{{ wine.name }}</td>
+                        <td>{{wine.user.first_name}} {{wine.user.last_name}}</td>
+                        <td>{{ wine.type }}</td>
+                        <td>{{ wine.description }}</td>
+                        <td>
+                            
+                            {% if wine.user_id == session.user_id %}
+                                <a href="/edit/wine/{{wine.id}}">Edit</a>
+                                <a href="/destroy/wine/{{wine.id}}">Delete</a> 
+                            {% else %}
+                                {% if wine.id in user.favorite_wines %}
+                                <a href="/unfavorites/wine/{{wine.id}}">Remove from favorites</a>
+                                {% else %}
+                                <a href="/favorites/wine/{{wine.id}}">Add to favorites</a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="bottles">
+        <img src="/static/img/bottles.png" alt="bottles">
+    </div>
+
+
+</body>
+</html>

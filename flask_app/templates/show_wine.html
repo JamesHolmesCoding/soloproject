@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Wines</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <nav class="d-flex justify-content-between align-items-center col-12 navbar">
+        <h1 class="text-center">Welcome to Wine Club {{user.first_name}}!!!</h1>
+        <div class="d-flex col-4 justify-content-around">
+            <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+    </nav>
+    <div class="card col-10 mx-auto my-5 wine_show_card">
+        <div class="card-body">
+            <h1>My Wines:</h1>
+
+            {% for w in wine %}
+                    <div class="d-flex justify-content-between">
+                        {% if w.user_id == session.user_id or w.id in user.favorite_wines %}
+                        <div>
+                            <h2>{{ w.name }}</h2>
+                            <p>{{ w.description }}</p>
+                        </div>
+                        <p>${{ w.price }}</p>
+                        <div class="action-links">
+                            <a href="/edit/wine/{{w.id}}">Edit</a>
+                            <a href="/destroy/wine/{{w.id}}">Delete</a>
+                            <a href="/purchase">Purchase</a>
+                        </div>
+                        {% endif %}
+                    </div>
+            {% endfor %}        
+            
+        
+    
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="wines">
+        <img src="/static/img/wines.png" alt="wines">
+    </div>
+
+</body>
+</html>

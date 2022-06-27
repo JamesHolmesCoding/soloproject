@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Wine</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <nav class="d-flex justify-content-between align-items-center col-12 navbar">
+        <h1 class="text-center">Welcome to Wine Club {{user.first_name}}!!!</h1>
+        <div class="d-flex col-4 justify-content-around">
+            <a href="/show" class="btn btn-primary">My Favorite Wines</a>
+            <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+    </nav>
+    
+    <h1 class="text-center">Add A New Wine</h1>
+    <form action="/create/wine" method="post" class="col-5 p-4 my-4 mx-auto wine_show_card mt-5">
+        
+        {% with messages = get_flashed_messages(category_filter=['wine']) %}
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Create your Wine Profile</strong>
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="d-flex justify-content-between col-10">
+            <div class="col-10">
+                <div class="form-group">
+                    <label for="name">Wine Name:</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <input type="text" name="type" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="text" name="price" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" name="description" class="form-control">
+                </div>
+                <div>
+                    <br>
+                    <input type="submit" value="Create" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="wines">
+        <img src="/static/img/wines.png" alt="wines">
+    </div>
+
+</body>
+</html>
